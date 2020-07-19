@@ -1,18 +1,12 @@
 <?php
 
-class get_video
+class RDTvideo
 {
-    private $post_url;
-    private $video_link;
-    private $data;
+    private string $post_url;
+    private string $video_link;
+    private array $data;
 
-    /**
-     * Sets post url
-     * @param string $post_url
-     * @return string
-     * @throws Exception
-     */
-    public function getVideoLink($post_url)
+    public function getVideoLink(string $post_url): string
     {
         if (!isset($post_url) or trim($post_url) == '' or strpos($post_url, 'reddit.com') === false) {
             throw new Exception("You must provide a Reddit post url");
@@ -28,30 +22,19 @@ class get_video
         return $video_link;
     }
 
-    /**
-     * Downloads source video
-     * @param string $save_as
-     * @return boolean
-     * @throws Exception
-     */
-    public function download($save_as)
+    public function download(string $save_as, string $preset = 'fast', int $crf = 20): bool
     {
         $try_ffmpeg = trim(shell_exec('type -P ffmpeg'));
         if (empty($try_ffmpeg)) {
             throw new Exception("FFmpeg not found on your system");
         }
         $video_link = $this->video_link;
-        $command = "ffmpeg -i $video_link -c copy $save_as.mp4";
+        $command = "ffmpeg -i $video_link -c:v libx264 -preset $preset -crf $crf $save_as.mp4";
         echo shell_exec($command);
         return true;
     }
 
-    /**
-     * Gets video dimensions and duration as array
-     * @param array $data
-     * @return array
-     */
-    public function videoDetails()
+    public function videoDetails(): array
     {
         $data = $this->data;
         $height = $data[0]['data']['children'][0]['data']['secure_media']['reddit_video']['height'];
@@ -60,53 +43,28 @@ class get_video
         return array('width' => $width, 'height' => $height, 'duration' => $duration);
     }
 
-    /**
-     * Gets video thumbnail
-     * @return string
-     */
-    public function videoThumb()
+    public function videoThumb(): string
     {
-        $data = $this->data;
-        return $data[0]['data']['children'][0]['data']['thumbnail'];
+        return $this->data[0]['data']['children'][0]['data']['thumbnail'];
     }
 
-    /**
-     * Gets video sub
-     * @return string
-     */
-    public function videoPostedSub()
+    public function videoPostedSub(): string
     {
-        $data = $this->data;
-        return $data[0]['data']['children'][0]['data']['subreddit'];
+        return $this->data[0]['data']['children'][0]['data']['subreddit'];
     }
 
-    /**
-     * Gets user who posted video
-     * @return string
-     */
-    public function videoPostedBy()
+    public function videoPostedBy(): string
     {
-        $data = $this->data;
-        return $data[0]['data']['children'][0]['data']['author'];
+        return $this->data[0]['data']['children'][0]['data']['author'];
     }
 
-    /**
-     * Gets post title for video
-     * @return string
-     */
-    public function videoTitle()
+    public function videoTitle(): string
     {
-        $data = $this->data;
-        return $data[0]['data']['children'][0]['data']['title'];
+        return $this->data[0]['data']['children'][0]['data']['title'];
     }
 
-    /**
-     * Gets date and time for post
-     * @return string
-     */
-    public function videoPostedDate($format = 'Y-m-d H:i:s')
+    public function videoPostedDate(string $format = 'Y-m-d H:i:s'): string
     {
-        $data = $this->data;
-        return gmdate($format, $data[0]['data']['children'][0]['data']['created_utc']);
+        return gmdate($format, $this->data[0]['data']['children'][0]['data']['created_utc']);
     }
 }
