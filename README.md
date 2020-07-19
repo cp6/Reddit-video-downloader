@@ -11,7 +11,7 @@ require_once('rdt-video.php');
 ```
 Call a new instance with the Reddit post url
 ```php
-$call = new get_video();
+$call = new RDTvideo();
 $call->getVideoLink('https://www.reddit.com/r/funny/comments/d8qo81/baby_crocodiles_sound_like_theyre_shooting_laser/');
 ```
 
@@ -20,6 +20,16 @@ $call->getVideoLink('https://www.reddit.com/r/funny/comments/d8qo81/baby_crocodi
 echo $call->download('thevideo');
 ```
 If FFmpeg is on system will save video as thevideo.mp4
+
+You can also define the preset and crf:
+
+```php
+echo $call->download('thevideo', 'faster', 23);
+```
+
+The default is fast and 20
+
+
 
 ##### Get Post title 
 ```php
