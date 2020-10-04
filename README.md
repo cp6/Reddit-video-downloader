@@ -17,7 +17,7 @@ $call->getVideoLink('https://www.reddit.com/r/funny/comments/d8qo81/baby_crocodi
 
 ##### Download video
 ```php
-echo $call->download('thevideo');
+echo $call->download('thevideo');//Saves as thevideo.mp4
 ```
 If FFmpeg is on system will save video as thevideo.mp4
 
