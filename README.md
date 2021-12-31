@@ -45,7 +45,7 @@ echo $call->videoPostedSub();
 
 ##### Get date when posted
 ```php
-echo $call->videoPostedDate()
+echo $call->videoPostedDate();
 ```
 
 ##### Get user who posted
@@ -55,7 +55,7 @@ echo $call->videoPostedby();
 
 #####  Get video thumbnail
 ```php
-echo $call->videoThumb()
+echo $call->videoThumb();
 ```
 
 ##### Get video dimensions and duration
