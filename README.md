@@ -7,11 +7,11 @@ The Reddit post URL is used as the input (see example below).
 
 ## Features and usage
 
-Make sure the class is included
+Make sure the class is included with:
 ```php
 require_once('rdt-video.php');
 ```
-Call a new instance with the Reddit post url
+Call the RDTvideo class with the Reddit post url that you want to download the video from:
 ```php
 $call = new RDTvideo();
 $call->getVideoLink('https://www.reddit.com/r/funny/comments/d8qo81/baby_crocodiles_sound_like_theyre_shooting_laser/');
@@ -21,9 +21,9 @@ $call->getVideoLink('https://www.reddit.com/r/funny/comments/d8qo81/baby_crocodi
 ```php
 echo $call->download('thevideo');//Saves as thevideo.mp4
 ```
-If FFmpeg is on system will save video as thevideo.mp4
+If FFmpeg is on system it will save the video as thevideo.mp4
 
-You can also define the preset and crf:
+You can also define the preset and crf if you want to compress the video:
 
 ```php
 echo $call->download('thevideo', 'faster', 23);
