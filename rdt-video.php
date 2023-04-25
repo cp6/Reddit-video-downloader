@@ -1,5 +1,6 @@
 <?php
 
+
 class RDTvideo
 {
     private string $post_url;
@@ -8,18 +9,15 @@ class RDTvideo
 
     public function getVideoLink(string $post_url): string
     {
-        if (!isset($post_url) or trim($post_url) == '' or strpos($post_url, 'reddit.com') === false) {
+        if (!isset($post_url) || trim($post_url) === '' || !str_contains($post_url, 'reddit.com')) {
             throw new Exception("You must provide a Reddit post url");
         }
         $this->post_url = $post_url;
-        $data = json_decode(file_get_contents("" . $post_url . ".json"), true);
-        $this->data = $data;
-        if ($data[0]['data']['children'][0]['data']['secure_media']['reddit_video']['is_gif'] == true) {
+        $this->data = $data = json_decode(file_get_contents($post_url . ".json"), true);
+        if ($data[0]['data']['children'][0]['data']['secure_media']['reddit_video']['is_gif']) {
             throw new Exception("Video is actually a gif");
         }
-        $video_link = $data[0]['data']['children'][0]['data']['secure_media']['reddit_video']['dash_url'];
-        $this->video_link = $video_link;
-        return $video_link;
+        return $this->video_link = $data[0]['data']['children'][0]['data']['secure_media']['reddit_video']['dash_url'];
     }
 
     public function download(string $save_as, string $preset = 'fast', int $crf = 20): bool
@@ -28,8 +26,7 @@ class RDTvideo
         if (empty($try_ffmpeg)) {
             throw new Exception("FFmpeg not found on your system");
         }
-        $video_link = $this->video_link;
-        $command = "ffmpeg -i $video_link -c:v libx264 -preset $preset -crf $crf $save_as.mp4";
+        $command = "ffmpeg -i {$this->video_link} -c:v libx264 -preset {$preset} -crf {$crf} {$save_as}.mp4";
         echo shell_exec($command);
         return true;
     }
