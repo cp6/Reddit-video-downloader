@@ -1,9 +1,9 @@
 # Reddit video downloader
-Super simple PHP class that downloads videos hosted on **v.redd.it** as well as get post details such as thumbnail, video dimensions, duration, posted date, title, user and subreddit.
+Super simple PHP class that downloads videos hosted on **v.redd.it** as well as getting the post details such as thumbnail, video dimensions, duration, posted date, title, user and subreddit.
 
 The Reddit post URL is used as the input (see example below).
 
-#### Note you will need [FFmpeg](https://www.ffmpeg.org/) installed on your web server.
+#### Note you will need [FFmpeg](https://www.ffmpeg.org/) installed on your web server for this to work.
 
 ## Features and usage
 
@@ -21,7 +21,7 @@ $call->getVideoLink('https://www.reddit.com/r/funny/comments/d8qo81/baby_crocodi
 ```php
 echo $call->download('thevideo');//Saves as thevideo.mp4
 ```
-If FFmpeg is on system it will save the video as thevideo.mp4
+If FFmpeg is on system it will save the video as `thevideo.mp4`
 
 You can also define the preset and crf if you want to compress the video:
 
