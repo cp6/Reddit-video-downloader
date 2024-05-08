@@ -34,10 +34,11 @@ class RDTvideo
     public function videoDetails(): array
     {
         $data = $this->data;
-        $height = $data[0]['data']['children'][0]['data']['secure_media']['reddit_video']['height'];
-        $width = $data[0]['data']['children'][0]['data']['secure_media']['reddit_video']['width'];
-        $duration = $data[0]['data']['children'][0]['data']['secure_media']['reddit_video']['duration'];
-        return array('width' => $width, 'height' => $height, 'duration' => $duration);
+        return [
+            'width' => $data[0]['data']['children'][0]['data']['secure_media']['reddit_video']['height'],
+            'height' => $data[0]['data']['children'][0]['data']['secure_media']['reddit_video']['width'],
+            'duration' => $data[0]['data']['children'][0]['data']['secure_media']['reddit_video']['duration']
+            ];
     }
 
     public function videoThumb(): string
